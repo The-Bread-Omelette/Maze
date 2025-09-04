@@ -15,13 +15,17 @@ Aetherium Labyrinth is a desktop application that serves as the user interface f
 
 ---
 
+## Project Concept: Hardware & Software Integration
+
+This project is a practical example of integrating custom hardware with a modern software interface. The core of the game is a physical labyrinth, controlled by an **Arduino** microcontroller, servo motors, and sensors. This hardware communicates in real-time with the **Electron** desktop application, which provides the user interface, game timing, and leaderboard management. This blend of physical computing and software development creates a complete and interactive user experience.
+
+---
+
 ## Technologies Used
 
--   **Electron**: To create the cross-platform desktop application.
--   **Node.js**: As the backend runtime environment.
--   **SerialPort**: For communication between the application and the hardware maze.
--   **ExcelJS**: To read from and write to the `.xlsx` leaderboard file.
--   **HTML, CSS, JavaScript**: For the user interface and frontend logic.
+-   **Software**: Electron, Node.js, ExcelJS, HTML, CSS, JavaScript
+-   **Hardware**: Arduino, Servos, Ultrasonic Sensor, Joystick
+-   **Communication**: Serial Port (via `node-serialport`)
 
 ---
 
