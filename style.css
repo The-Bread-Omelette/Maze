@@ -1,0 +1,355 @@
+/* ==================================================
+AETHERIUM LABYRINTH - STYLESHEET - V12 (FINAL CRISP UI)
+================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+:root {
+    --primary-glow: #00c3ff;
+    --secondary-glow: #af00ff;
+    --background-start: #0a0e1a;
+    --text-color: #dfefff;
+    --text-muted: #8cb2d4;
+    --border-color: rgba(0, 195, 255, 0.25);
+    --error-color: #ff6b6b;
+    --defeat-color: #e03636;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    position: relative;
+}
+
+/* --- Particle Canvas Styling --- */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3; 
+}
+
+
+/* --- Pure CSS Starfield Animation --- */
+@keyframes move-stars {
+    from {transform: translateY(0px);}
+    to {transform: translateY(-2000px);}
+}
+
+#stars, #stars2, #stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: -2; 
+}
+
+#stars {
+    background: transparent;
+    background-image: 
+      radial-gradient(1px 1px at 20% 30%, white, transparent),
+      radial-gradient(1px 1px at 80% 10%, white, transparent),
+      radial-gradient(1px 1px at 50% 70%, white, transparent),
+      radial-gradient(2px 2px at 90% 40%, white, transparent),
+      radial-gradient(2px 2px at 10% 80%, white, transparent),
+      radial-gradient(2px 2px at 40% 50%, white, transparent);
+    background-repeat: repeat;
+    background-size: 400px 400px;
+    animation: move-stars 150s linear infinite;
+}
+
+#stars2 {
+    background: transparent;
+    background-image: 
+      radial-gradient(2px 2px at 15% 60%, white, transparent),
+      radial-gradient(2px 2px at 75% 25%, white, transparent),
+      radial-gradient(3px 3px at 55% 85%, white, transparent);
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    animation: move-stars 100s linear infinite;
+}
+
+#stars3 {
+    background: transparent;
+    background-image: 
+      radial-gradient(3px 3px at 5% 90%, white, transparent),
+      radial-gradient(3px 3px at 95% 5%, white, transparent);
+    background-repeat: repeat;
+    background-size: 800px 800px;
+    animation: move-stars 50s linear infinite;
+}
+
+
+/* --- Main container styling --- */
+.main-container {
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 800px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 0 35px rgba(0, 195, 255, 0.2);
+    padding: 30px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Hide container visuals when game screen is active */
+.main-container:has(#game-screen.active) {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.main-container:has(#game-screen.active) .corner {
+    display: none;
+}
+
+
+.corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-glow);
+    opacity: 0.7;
+    animation: corner-pulse 4s infinite alternate;
+    z-index: 2;
+}
+@keyframes corner-pulse {
+    to { opacity: 0.3; }
+}
+.corner.top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+.corner.top-right { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+.corner.bottom-left { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+.corner.bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+
+/* --- Screen Transitions --- */
+/* REMOVED the @keyframes float animation that was causing blurriness */
+.screen {
+    position: absolute;
+    top: 30px; left: 40px; right: 40px; bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    clip-path: circle(0% at 50% 50%);
+    transition: opacity 0.7s ease-out, clip-path 0.7s ease-in-out;
+    z-index: 2;
+}
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    clip-path: circle(150% at 50% 50%);
+    /* REMOVED the 'animation: float' property to prevent blur */
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--primary-glow), 0 0 20px rgba(0, 195, 255, 0.7), 0 0 35px rgba(175, 0, 255, 0.5);
+}
+
+h1 { font-size: 3.5rem; position: relative; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.3rem; }
+
+#welcome-screen .title-line { 
+    display: block; 
+    position: relative;
+    animation: text-glitch 5s infinite;
+}
+#welcome-screen .title-line:nth-child(2) { animation-delay: 0.2s; }
+
+@keyframes text-glitch {
+    0%, 10%, 12%, 100% { transform: none; color: var(--text-color); }
+    10.5% { transform: skewX(5deg); color: var(--primary-glow); }
+    11% { transform: skewX(-5deg); }
+    11.5% { transform: none; }
+}
+
+.input-group { margin: 15px 0; width: 100%; max-width: 380px; position: relative; }
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+}
+.input-field::placeholder { color: var(--text-muted); text-transform: uppercase; }
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary-glow);
+    box-shadow: 0 0 12px rgba(0, 195, 255, 0.6), inset 0 0 10px rgba(0, 195, 255, 0.2);
+}
+
+.welcome-buttons { display: flex; gap: 20px; margin-top: 20px; }
+
+.start-button {
+    padding: 12px 35px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    background: linear-gradient(45deg, var(--secondary-glow), var(--primary-glow));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 25px rgba(175, 0, 255, 0.8), 0 0 10px rgba(0, 195, 255, 0.6);
+    transition: all 0.3s ease;
+    animation: pulse 2.5s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 80%);
+    transform: skewX(-30deg);
+    transition: left 0.7s ease-in-out;
+}
+
+.start-button:hover::before {
+    left: 100%;
+}
+
+.start-button:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 195, 255, 0.9), 0 0 15px rgba(0, 195, 255, 0.7); }
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 25px rgba(175, 0, 255, 0.8), 0 0 10px rgba(0, 195, 255, 0.6); }
+    50% { box-shadow: 0 0 35px rgba(0, 195, 255, 0.9), 0 0 15px rgba(175, 0, 255, 0.6); }
+    100% { box-shadow: 0 0 25px rgba(175, 0, 255, 0.8), 0 0 10px rgba(0, 195, 255, 0.6); }
+}
+
+.secondary-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.secondary-button:hover { background: var(--border-color); color: var(--text-color); border-color: var(--primary-glow); }
+
+.error-text { color: var(--error-color); margin-top: 15px; height: 20px; font-weight: 500; }
+.tertiary-button {
+    position: absolute;
+    bottom: -15px; right: 0;
+    padding: 5px 10px; font-size: 0.8rem;
+    background: none; border: none; color: var(--text-muted);
+    opacity: 0.5; cursor: pointer; transition: opacity 0.3s ease;
+}
+.tertiary-button:hover { opacity: 1; text-decoration: underline; }
+
+#game-screen .status-text { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 15px; }
+#player-info { position: absolute; top: -15px; left: 0; font-size: 1.1rem; color: var(--text-muted); }
+
+.timer-display { 
+    font-family: 'Orbitron', monospace; 
+    font-size: 6rem; 
+    font-weight: 900; 
+    color: var(--primary-glow); 
+    text-shadow: 0 0 15px var(--primary-glow);
+    animation: timer-pulse 1.5s infinite;
+}
+@keyframes timer-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.02); opacity: 0.85; }
+}
+
+.game-buttons { display: flex; gap: 20px; margin-top: 25px; }
+#leaderboard-screen { flex-direction: row; align-items: stretch; gap: 40px; }
+.leaderboard-panel { flex: 2; display: flex; flex-direction: column; }
+.results-panel { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-right: 1px solid var(--border-color); padding-right: 40px; }
+#results-panel.hidden { display: none; }
+
+#final-time { font-family: 'Orbitron', monospace; font-size: 3.5rem; color: var(--primary-glow); margin: 15px 0; }
+#personal-best-text { font-size: 1.1rem; color: var(--text-muted); min-height: 20px; }
+
+.action-buttons { margin-top: 30px; }
+.action-button {
+    padding: 8px 25px; margin: 0 8px;
+    background: transparent; border: 1px solid var(--primary-glow); color: var(--primary-glow);
+    border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+.action-button:hover { background: var(--primary-glow); color: var(--background-start); box-shadow: 0 0 10px var(--primary-glow); }
+
+.test-button { border-color: var(--text-muted); color: var(--text-muted); }
+.test-button:hover { background: var(--text-muted); color: var(--background-start); border-color: var(--text-muted); }
+
+.defeat-button { border-color: var(--defeat-color); color: var(--defeat-color); }
+.defeat-button:hover { background: var(--defeat-color); color: var(--text-color); box-shadow: 0 0 10px var(--defeat-color); }
+
+.leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 15px; flex-grow: 1; }
+.leaderboard-table th, .leaderboard-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+.leaderboard-table th { font-family: 'Orbitron', sans-serif; color: var(--primary-glow); }
+.leaderboard-table tr:hover { background: rgba(0, 195, 255, 0.07); }
+.leaderboard-table .current-player { background: rgba(0, 195, 255, 0.15); border-left: 2px solid var(--primary-glow); border-right: 2px solid var(--primary-glow); }
+.leaderboard-empty-cell { text-align: center; color: var(--text-muted); }
+
+.stats-widgets { display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid var(--border-color); }
+.widget { text-align: center; }
+.widget h4 { margin: 0 0 5px 0; font-family: 'Orbitron', sans-serif; color: var(--text-muted); font-size: 0.8rem; }
+.widget p { margin: 0; font-size: 1.3rem; font-weight: 700; color: var(--primary-glow); animation: widget-pulse 3s infinite ease-in-out; }
+
+/* Pulsing animation for stats widgets */
+@keyframes widget-pulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 0 5px var(--primary-glow);
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 15px var(--primary-glow);
+    }
+}
+
+
+.back-button { position: absolute; bottom: -10px; left: 0; display: none; }
+.back-button.visible { display: block; }
+
+@keyframes fadeInRow {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.leaderboard-table tr.animated-row {
+    opacity: 0;
+    animation: fadeInRow 0.5s ease-out forwards;
+}

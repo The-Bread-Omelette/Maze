@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- The CSP is updated to allow inline scripts, which may be needed by your local setup. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aetherium Labyrinth</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Canvas for the dynamic particle network background, controlled by renderer.js -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- The original pure CSS starfield background is kept for added depth. -->
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+
+    <div class="main-container">
+        <!-- A scanline overlay to give a futuristic HUD/monitor effect. -->
+        <div class="scanline-overlay"></div>
+
+        <!-- Decorative corner brackets for a HUD feel -->
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <!-- SCREEN 1: WELCOME / ENTRY PORTAL -->
+        <div id="welcome-screen" class="screen active">
+            <h1>
+                <span class="title-line" data-text="Aetherium">Aetherium</span>
+                <span class="title-line" data-text="Labyrinth">Labyrinth</span>
+            </h1>
+            <div class="input-group">
+                <input type="text" id="name-input" class="input-field" placeholder="ENTER PLAYER NAME">
+            </div>
+            <div class="input-group">
+                <input type="text" id="rollno-input" class="input-field" placeholder="ENTER ROLL NUMBER">
+            </div>
+            <div class="welcome-buttons">
+                <button id="start-button" class="start-button">LESSGOOOO</button>
+                <button id="view-leaderboard-button" class="secondary-button">View Leaderboard</button>
+            </div>
+            <p id="error-message" class="error-text"></p>
+            <button id="show-file-button" class="tertiary-button">Show Data File</button>
+        </div>
+
+        <!-- SCREEN 2: GAME / TIMER INTERFACE -->
+        <div id="game-screen" class="screen">
+            <div id="player-info">Now Playing: [Player Name]</div>
+            <h3 class="status-text">NAVIGATING THE LABYRINTH...</h3>
+            <div id="timer" class="timer-display">00:00:000</div>
+            <div class="game-buttons">
+                <button id="simulation-finish-button" class="action-button test-button">Simulate Finish</button>
+                <button id="accept-defeat-button" class="action-button defeat-button">Accept Defeat</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: RESULTS & LEADERBOARD -->
+        <div id="leaderboard-screen" class="screen">
+            <div class="results-panel" id="results-panel">
+                <h2>TRIAL COMPLETE!</h2>
+                <div id="final-time">00:00:000</div>
+                <div id="personal-best-text">New Personal Best!</div>
+                <div class="action-buttons">
+                    <button id="play-again-button" class="action-button">PLAY AGAIN</button>
+                    <button id="exit-button" class="action-button">EXIT</button>
+                </div>
+            </div>
+            <div class="leaderboard-panel">
+                <h3>LABYRINTH LEGENDS</h3>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>NAME</th>
+                            <th>ROLL NO.</th>
+                            <th>BEST TIME (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+                <div class="stats-widgets">
+                    <div class="widget">
+                        <h4>RECORD TIME</h4>
+                        <p id="record-time-stat">--.--</p>
+                    </div>
+                    <div class="widget">
+                        <h4>AVG. BEST TIME</h4>
+                        <p id="average-time-stat">--.--</p>
+                    </div>
+                    <div class="widget">
+                        <h4>TOTAL PLAYERS</h4>
+                        <p id="total-players-stat">0</p>
+                    </div>
+                    <div class="widget">
+                        <h4>SUCCESS RATE</h4>
+                        <p id="success-rate-stat">0%</p>
+                    </div>
+                </div>
+                <button id="back-button" class="action-button back-button">BACK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your renderer script, which now includes the particle animation logic -->
+    <script src="renderer.js" defer></script>
+
+</body>
+</html>
